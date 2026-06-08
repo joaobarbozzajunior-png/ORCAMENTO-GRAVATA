@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta — Barbozza Construtora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f5f2eb;
+    color: #1a1a18;
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* HERO */
+  .hero {
+    background: #1a1a18;
+    border-radius: 16px;
+    padding: 2.5rem 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -70px; right: -70px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    border: 45px solid rgba(180,140,80,0.1);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 25px solid rgba(180,140,80,0.06);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #b48c50;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: #f0ebe0;
+    line-height: 1.08;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(240,235,224,0.45);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    border-top: 0.5px solid rgba(180,140,80,0.2);
+    padding-top: 1.25rem;
+  }
+
+  .hero-meta-item label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240,235,224,0.38);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .hero-meta-item span {
+    font-size: 13px;
+    color: #f0ebe0;
+    font-weight: 400;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: #ece8df;
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 1.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 8px 10px;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b6860;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .tab-btn.active {
+    background: #1a1a18;
+    color: #b48c50;
+  }
+
+  .tab-btn:hover:not(.active) {
+    background: rgba(26,26,24,0.07);
+    color: #1a1a18;
+  }
+
+  /* PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; animation: fadeIn 0.25s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* CARDS */
+  .section-card {
+    background: #fff;
+    border: 0.5px solid rgba(26,26,24,0.1);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 0.65rem;
+    color: #1a1a18;
+  }
+
+  .section-card p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #5a5750;
+  }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(180,140,80,0.1);
+    color: #9a7035;
+    border: 0.5px solid rgba(180,140,80,0.3);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* SCOPE GRID */
+  .scope-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    margin-top: 1rem;
+  }
+
+  .scope-item {
+    background: #f5f2eb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1a1a18;
+    border: 0.5px solid rgba(26,26,24,0.07);
+  }
+
+  .scope-item i { font-size: 15px; color: #b48c50; }
+
+  /* TEAM GRID */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 8px;
+    margin-top: 1rem;
+  }
+
+  .team-card {
+    background: #f5f2eb;
+    border-radius: 10px;
+    padding: 14px 12px;
+    text-align: center;
+    border: 0.5px solid rgba(26,26,24,0.07);
+  }
+
+  .team-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: #1a1a18;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px;
+  }
+
+  .team-avatar i { font-size: 17px; color: #b48c50; }
+
+  .team-card span {
+    font-size: 11px;
+    color: #6b6860;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* OPS LIST */
+  .ops-list {
+    list-style: none;
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ops-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #5a5750;
+    padding: 9px 13px;
+    border-radius: 8px;
+    background: #f5f2eb;
+    border: 0.5px solid rgba(26,26,24,0.07);
+  }
+
+  .ops-list li i { font-size: 16px; color: #b48c50; flex-shrink: 0; }
+
+  /* PROGRESS */
+  .prog-bar-wrap {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .prog-row { display: flex; flex-direction: column; gap: 4px; }
+
+  .prog-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+  }
+
+  .prog-meta span:first-child { color: #6b6860; }
+  .prog-meta span:last-child { color: #b48c50; font-weight: 500; }
+
+  .prog-track {
+    height: 4px;
+    background: #ece8df;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .prog-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #c8a060, #b48c50);
+    border-radius: 2px;
+  }
+
+  /* INVESTMENT */
+  .invest-highlight {
+    background: #1a1a18;
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .invest-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240,235,224,0.4);
+    margin-bottom: 6px;
+  }
+
+  .invest-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #f0ebe0;
+    line-height: 1;
+  }
+
+  .invest-badge {
+    background: rgba(180,140,80,0.12);
+    border: 0.5px solid rgba(180,140,80,0.3);
+    border-radius: 10px;
+    padding: 12px 18px;
+    text-align: right;
+  }
+
+  .invest-badge .entry-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(180,140,80,0.65);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .invest-badge .entry-val {
+    font-size: 19px;
+    font-weight: 500;
+    color: #b48c50;
+  }
+
+  .invest-note {
+    background: #fff;
+    border-left: 2.5px solid #b48c50;
+    border-radius: 0 10px 10px 0;
+    padding: 13px 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #5a5750;
+    margin-bottom: 1rem;
+  }
+
+  .invest-note strong { color: #1a1a18; }
+
+  /* CTA */
+  .cta-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-primary {
+    flex: 1;
+    min-width: 160px;
+    background: #1a1a18;
+    color: #b48c50;
+    border: 0.5px solid rgba(180,140,80,0.35);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.15s;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .cta-primary:hover { opacity: 0.82; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-size: 11px;
+    color: rgba(26,26,24,0.3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 1.75rem 1.5rem 1.5rem; }
+    .hero-title { font-size: 32px; }
+    .hero-meta { gap: 1.25rem; }
+    .invest-highlight { flex-direction: column; align-items: flex-start; }
+    .invest-badge { text-align: left; width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Proposta de Execução de Obra</div>
+    <div class="hero-title">Barbozza<br>Construtora</div>
+    <div class="hero-sub">+10 anos de excelência na construção civil</div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <label>Local</label>
+        <span>Condomínio Apaloosa, Gravatá-PE</span>
+      </div>
+      <div class="hero-meta-item">
+        <label>Tipo</label>
+        <span>Residência — 3 lajes inclinadas</span>
+      </div>
+      <div class="hero-meta-item">
+        <label>Investimento</label>
+        <span>R$ 309.000</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('sobre', this)">Sobre</button>
+    <button class="tab-btn" onclick="showTab('escopo', this)">Escopo</button>
+    <button class="tab-btn" onclick="showTab('equipe', this)">Equipe</button>
+    <button class="tab-btn" onclick="showTab('gestao', this)">Gestão</button>
+    <button class="tab-btn" onclick="showTab('investimento', this)">Investimento</button>
+  </div>
+
+  <!-- SOBRE -->
+  <div id="tab-sobre" class="panel active">
+    <div class="section-card">
+      <span class="pill">Quem somos</span>
+      <h3>Uma construtora com compromisso real</h3>
+      <p>A Barbozza Construtora atua há mais de 10 anos no mercado da construção civil, oferecendo planejamento rigoroso, organização e compromisso genuíno com a qualidade. Nosso objetivo é proporcionar ao cliente uma experiência tranquila e transparente durante toda a construção.</p>
+    </div>
+    <div class="section-card">
+      <span class="pill">Objeto da proposta</span>
+      <h3>Execução completa da sua residência</h3>
+      <p>Execução completa da residência localizada no Condomínio Apaloosa, em Gravatá-PE, contemplando toda a mão de obra necessária — desde a fundação até a conclusão dos acabamentos. A residência contará com 3 lajes inclinadas.</p>
+    </div>
+    <div class="section-card">
+      <span class="pill">Fases da obra</span>
+      <h3>Do alicerce à entrega das chaves</h3>
+      <div class="prog-bar-wrap">
+        <div class="prog-row">
+          <div class="prog-meta"><span>Fundação &amp; estrutura</span><span>Fase 1</span></div>
+          <div class="prog-track"><div class="prog-fill" style="width:100%"></div></div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-meta"><span>Alvenaria &amp; instalações</span><span>Fase 2</span></div>
+          <div class="prog-track"><div class="prog-fill" style="width:100%"></div></div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-meta"><span>Revestimentos &amp; acabamentos</span><span>Fase 3</span></div>
+          <div class="prog-track"><div class="prog-fill" style="width:100%"></div></div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-meta"><span>Entrega final</span><span>Fase 4</span></div>
+          <div class="prog-track"><div class="prog-fill" style="width:100%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESCOPO -->
+  <div id="tab-escopo" class="panel">
+    <div class="section-card">
+      <span class="pill">Serviços incluídos</span>
+      <h3>Cobertura de ponta a ponta</h3>
+      <p>Todos os serviços essenciais estão incluídos no escopo — sem surpresas ao longo da obra.</p>
+      <div class="scope-grid">
+        <div class="scope-item"><i class="ti ti-layer-difference"></i>Fundação</div>
+        <div class="scope-item"><i class="ti ti-building"></i>Estruturas</div>
+        <div class="scope-item"><i class="ti ti-tools"></i>Armação de ferragens</div>
+        <div class="scope-item"><i class="ti ti-home-2"></i>Lajes inclinadas</div>
+        <div class="scope-item"><i class="ti ti-wall"></i>Alvenaria</div>
+        <div class="scope-item"><i class="ti ti-ripple"></i>Rebocos</div>
+        <div class="scope-item"><i class="ti ti-droplet"></i>Instalações hidráulicas</div>
+        <div class="scope-item"><i class="ti ti-bolt"></i>Instalações elétricas</div>
+        <div class="scope-item"><i class="ti ti-layout-grid"></i>Revestimentos</div>
+        <div class="scope-item"><i class="ti ti-brush"></i>Pintura</div>
+        <div class="scope-item"><i class="ti ti-square-rounded"></i>Gesso</div>
+        <div class="scope-item"><i class="ti ti-door"></i>Portas &amp; esquadrias</div>
+        <div class="scope-item"><i class="ti ti-fence"></i>Grades</div>
+        <div class="scope-item"><i class="ti ti-key"></i>Entrega final</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EQUIPE -->
+  <div id="tab-equipe" class="panel">
+    <div class="section-card">
+      <span class="pill">Profissionais</span>
+      <h3>Equipe técnica completa</h3>
+      <p>Profissionais especializados em cada etapa da construção, sob supervisão de engenheiro responsável e mestre de obras experiente.</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar"><i class="ti ti-certificate"></i></div>
+          <span>Engenheiro responsável</span>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ti ti-eye"></i></div>
+          <span>Engenheiro fiscal</span>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ti ti-hard-hat"></i></div>
+          <span>Mestre de obras</span>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ti ti-bolt"></i></div>
+          <span>Eletricistas</span>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ti ti-droplet"></i></div>
+          <span>Encanadores</span>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ti ti-tools"></i></div>
+          <span>Carpinteiros &amp; ferreiros</span>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ti ti-wall"></i></div>
+          <span>Pedreiros &amp; armadores</span>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ti ti-brush"></i></div>
+          <span>Pintores &amp; gesseiros</span>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ti ti-users"></i></div>
+          <span>Serventes &amp; auxiliares</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GESTAO -->
+  <div id="tab-gestao" class="panel">
+    <div class="section-card">
+      <span class="pill">Estrutura operacional</span>
+      <h3>Tudo sob controle, do início ao fim</h3>
+      <ul class="ops-list">
+        <li><i class="ti ti-home"></i>Alojamento e alimentação da equipe inclusos</li>
+        <li><i class="ti ti-shield-check"></i>EPIs e fardamentos fornecidos pela Barbozza</li>
+        <li><i class="ti ti-truck"></i>Logística completa gerenciada pela equipe</li>
+        <li><i class="ti ti-chart-line"></i>Gestão e organização da obra do início ao fim</li>
+      </ul>
+    </div>
+    <div class="section-card">
+      <span class="pill">Acompanhamento online</span>
+      <h3>Sua obra na palma da mão</h3>
+      <p>O cliente terá acesso diário à evolução da obra por aplicativo — com fotos, relatórios e acompanhamento do cronograma em tempo real.</p>
+      <ul class="ops-list" style="margin-top:0.75rem">
+        <li><i class="ti ti-camera"></i>Fotos diárias da obra</li>
+        <li><i class="ti ti-file-report"></i>Relatórios de progresso</li>
+        <li><i class="ti ti-calendar"></i>Cronograma atualizado em tempo real</li>
+      </ul>
+    </div>
+    <div class="section-card">
+      <span class="pill">Gestão de materiais</span>
+      <h3>Economia e controle de estoque</h3>
+      <ul class="ops-list">
+        <li><i class="ti ti-calendar-check"></i>Solicitações programadas toda segunda e quarta-feira</li>
+        <li><i class="ti ti-package"></i>Controle rigoroso de estoque na obra</li>
+        <li><i class="ti ti-coins"></i>Cotações na região para garantir economia significativa</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- INVESTIMENTO -->
+  <div id="tab-investimento" class="panel">
+    <div class="invest-highlight">
+      <div>
+        <div class="invest-label">Valor total da mão de obra</div>
+        <div class="invest-value">R$ 309.000</div>
+      </div>
+      <div class="invest-badge">
+        <span class="entry-label">Entrada inicial (7%)</span>
+        <span class="entry-val">R$ 21.630</span>
+      </div>
+    </div>
+    <div class="invest-note">
+      A entrada inicial é destinada à instalação da equipe, aluguel, alimentação, EPIs, fardamentos e preparação antecipada das ferragens da fundação — possibilitando <strong>avanço médio de 1 a 2 meses</strong> no cronograma da obra.
+    </div>
+    <div class="section-card">
+      <span class="pill">Compromisso Barbozza</span>
+      <h3>Responsabilidade e transparência</h3>
+      <p>A Barbozza Construtora conduz cada obra com responsabilidade, organização e transparência total — com equipe completa e dedicada em cada etapa, do alicerce à entrega das chaves.</p>
+    </div>
+  </div>
+
+  <div class="footer">Barbozza Construtora &nbsp;·&nbsp; Gravatá, Pernambuco</div>
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
